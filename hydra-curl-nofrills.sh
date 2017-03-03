@@ -8,27 +8,7 @@ NUM_URLS=${2:-$(wc -l < $TODO_FILE)}
 echo "reading ${NUM_URLS} urls from file ${TODO_FILE}"
 
 function curl_download {
-    ANSWER_SIZE=0
-    MIN_SIZE=10
-    MAX_RETRIES=1
-    ANSWER=""
-    TRIES=0
-    while [ "$TRIES" -lt "$MAX_RETRIES" ] && [ "$ANSWER_SIZE" -lt "$MIN_SIZE" ]
-    do
-        ANSWER=$(curl -s "$1" --max-time 10)
-        ERR=$?
-        if [ "$ERR" -ne "0" ]; then
-            ANSWER=""
-        else
-            ANSWER_SIZE=${#ANSWER}
-        fi
-        let "TRIES += 1"
-    done
-
-    if [ "$ANSWER_SIZE" -ge "$MIN_SIZE" ]; then
-        FNAME="$2/$(basename $1)"
-        echo $ANSWER > $FNAME
-    fi
+    curl -s "$1" --max-time 10 > $2/$(basename $1)
 }
 
 export -f curl_download
