@@ -1,6 +1,9 @@
 #!/bin/bash
 #
 # from http://northernmost.org/blog/find-out-what-is-using-your-swap/
+# execute as:
+#    ./getswap.sh | sort -n -k 5
+#    ./getswap.sh | egrep -v "Swap used: 0" | sort -n -k 5
 #
 # Get current swap usage for all running processes
 # Erik Ljungstrom 27/05/2011
